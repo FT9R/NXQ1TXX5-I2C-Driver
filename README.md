@@ -1,5 +1,5 @@
 # NXQ1TXH5 I2C driver
-Platform-independent I2C driver for the NXQ1TXH5 controller and driver IC for a 5 V Qi-certified/compliant low-power wireless charger. 
+Platform-independent I2C driver for the NXQ1TXH5 controller IC for a 5 V Qi-certified/compliant low-power wireless charger. 
 This driver facilitates communication between a microcontroller and the NXQ1TXH5, allowing developers to configure and monitor the IC's functionality easily.
 
 ## Features
