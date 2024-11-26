@@ -1,0 +1,7 @@
+# Hidden
+.*
+!/.gitignore
+
+# Build dirs
+**/EWARM/NXQ1TXH5
+**/EWARM/settings
