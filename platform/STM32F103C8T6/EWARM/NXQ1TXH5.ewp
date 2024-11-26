@@ -358,7 +358,7 @@
                     <state>$PROJ_DIR$/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy</state>
                     <state>$PROJ_DIR$/../Drivers/CMSIS/Device/ST/STM32F1xx/Include</state>
                     <state>$PROJ_DIR$/../Drivers/CMSIS/Include</state>
-                    <state>$PROJ_DIR$/../../nxq1txh5</state>
+                    <state>$PROJ_DIR$/../../../nxq1txh5/driver</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1203,17 +1203,11 @@
     </group>
     <group>
         <name>nxq1txh5</name>
-        <group>
-            <name>ifc</name>
-            <group>
-                <name>stm32</name>
-                <file>
-                    <name>$PROJ_DIR$\..\..\nxq1txh5\ifc\stm32\nxq1txh5_ifc.c</name>
-                </file>
-            </group>
-        </group>
         <file>
-            <name>$PROJ_DIR$\..\..\nxq1txh5\nxq1txh5.c</name>
+            <name>$PROJ_DIR$\..\..\..\nxq1txh5\driver\nxq1txh5.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\nxq1txh5\ifc\stm32\nxq1txh5_ifc.c</name>
         </file>
     </group>
 </project>

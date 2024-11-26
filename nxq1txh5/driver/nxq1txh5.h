@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ifc/stm32/nxq1txh5_ifc.h"
+#include "../ifc/stm32/nxq1txh5_ifc.h"
 
 /* Reference data types */
 typedef enum {
