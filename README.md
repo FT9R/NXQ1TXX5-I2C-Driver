@@ -5,9 +5,9 @@ This driver facilitates communication between a microcontroller and the NXQ1TXH5
 ## Features
 * Charge process ON/OFF control
 * Partially possible to get the current device operation
-* Digital supply (Vddd) voltage level control
+* Digital supply voltage (Vddd) level control
+* Supply voltage (Vdd) readings
 * Temperature readings from the internal device sensor
-* Vdd readings
 * NTC pin voltage readings
 
 ## Notes
