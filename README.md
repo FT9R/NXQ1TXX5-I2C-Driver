@@ -55,12 +55,12 @@ NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive_DMA, NXQ1TXX5_I2Cx_Transmit_DMA);
 ```C
 void I2C_TxCpltCallback()
 {
-    NXQ1TXX5_Callback(nxq);
+    NXQ1TXX5_Callback(&nxq);
 }
 
 void I2C_RxCpltCallback()
 {
-    NXQ1TXX5_Callback(nxq);
+    NXQ1TXX5_Callback(&nxq);
 }
 ```
 
