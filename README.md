@@ -1,9 +1,6 @@
 # NXQ1TXX5 I2C driver
 Platform-independent I2C driver for the NXQ1TXX5 controller IC series for a 5 V Qi-certified/compliant low-power wireless charger. 
 This driver facilitates communication between a microcontroller and the NXQ1TXX5, allowing developers to configure and monitor the IC's functionality easily.
-# NXQ1TXX5 I2C driver
-Platform-independent I2C driver for the NXQ1TXX5 controller IC series for a 5 V Qi-certified/compliant low-power wireless charger. 
-This driver facilitates communication between a microcontroller and the NXQ1TXX5, allowing developers to configure and monitor the IC's functionality easily.
 
 ## Features
 * Charge process ON/OFF control
@@ -53,6 +50,18 @@ NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive_IT, NXQ1TXX5_I2Cx_Transmit_IT);
 
 /* DMA */
 NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive_DMA, NXQ1TXX5_I2Cx_Transmit_DMA);
+```
+* Place driver callback in the RX and TX IRQs in case of non-blocking usage
+```C
+void I2C_TxCpltCallback()
+{
+    NXQ1TXX5_Callback(nxq);
+}
+
+void I2C_RxCpltCallback()
+{
+    NXQ1TXX5_Callback(nxq);
+}
 ```
 
 ## TODO
