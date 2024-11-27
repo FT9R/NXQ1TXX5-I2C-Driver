@@ -20,11 +20,9 @@ Majority of device parameters are valid only if device is in charge mode (either
 * Mention the header:
 ```C
 #include "nxq1txx5.h"
-#include "nxq1txx5.h"
 ```
 * Declare the device handle:
 ```C
-nxq1txx5_t nxq;
 nxq1txx5_t nxq;
 ```
 * Initialize I2C interface:
@@ -32,15 +30,29 @@ nxq1txx5_t nxq;
 I2Cx_Init();
 ```
 * Provide platform depended implementations for functions below in the `nxq1txx5_ifc.c`:
-* Provide platform depended implementations for functions below in the `nxq1txx5_ifc.c`:
 ```C
+/* Blocking */
 nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Receive(uint8_t regAddress, uint16_t *data);
 nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Transmit(uint8_t regAddress, uint16_t *data);
+
+/* IT */
+nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Receive_IT(uint8_t regAddress, uint16_t *data);
+nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Transmit_IT(uint8_t regAddress, uint16_t *data);
+
+/* DMA */
+nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Receive_DMA(uint8_t regAddress, uint16_t *data);
+nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Transmit_DMA(uint8_t regAddress, uint16_t *data);
 ```
 * Link the functions above to a device handle:
 ```C
+/* Blocking */
 NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive, NXQ1TXX5_I2Cx_Transmit);
-NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive, NXQ1TXX5_I2Cx_Transmit);
+
+/* IT */
+NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive_IT, NXQ1TXX5_I2Cx_Transmit_IT);
+
+/* DMA */
+NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive_DMA, NXQ1TXX5_I2Cx_Transmit_DMA);
 ```
 
 ## TODO
