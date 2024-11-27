@@ -57,41 +57,43 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define ADC_LS_TIM           htim4
-#define ADC_HS_TIM           htim3
-#define ADC_HS               hadc1
-#define ADC_LS               hadc2
-#define RGB_R_Pin            GPIO_PIN_0
-#define RGB_R_GPIO_Port      GPIOA
-#define RGB_G_Pin            GPIO_PIN_1
-#define RGB_G_GPIO_Port      GPIOA
-#define RGB_B_Pin            GPIO_PIN_2
-#define RGB_B_GPIO_Port      GPIOA
-#define TEMP_Pin             GPIO_PIN_3
-#define TEMP_GPIO_Port       GPIOA
-#define QI_CURRENT_Pin       GPIO_PIN_4
+#define ADC_LS_TIM htim4
+#define ADC_HS_TIM htim3
+#define ADC_HS hadc1
+#define ADC_LS hadc2
+#define RGB_R_Pin GPIO_PIN_0
+#define RGB_R_GPIO_Port GPIOA
+#define RGB_G_Pin GPIO_PIN_1
+#define RGB_G_GPIO_Port GPIOA
+#define RGB_B_Pin GPIO_PIN_2
+#define RGB_B_GPIO_Port GPIOA
+#define TEMP_Pin GPIO_PIN_3
+#define TEMP_GPIO_Port GPIOA
+#define QI_CURRENT_Pin GPIO_PIN_4
 #define QI_CURRENT_GPIO_Port GPIOA
-#define QI_VOLTAGE_Pin       GPIO_PIN_5
+#define QI_VOLTAGE_Pin GPIO_PIN_5
 #define QI_VOLTAGE_GPIO_Port GPIOA
-#define VIN_Pin              GPIO_PIN_6
-#define VIN_GPIO_Port        GPIOA
-#define IR_FRONT_Pin         GPIO_PIN_7
-#define IR_FRONT_GPIO_Port   GPIOA
-#define IR_PU_Pin            GPIO_PIN_0
-#define IR_PU_GPIO_Port      GPIOB
-#define IR_BACK_Pin          GPIO_PIN_1
-#define IR_BACK_GPIO_Port    GPIOB
-#define IR_EN_Pin            GPIO_PIN_2
-#define IR_EN_GPIO_Port      GPIOB
-#define LED_Pin              GPIO_PIN_12
-#define LED_GPIO_Port        GPIOA
-#define SOLENOID_Pin         GPIO_PIN_3
-#define SOLENOID_GPIO_Port   GPIOB
-#define USART1_DE_Pin        GPIO_PIN_5
-#define USART1_DE_GPIO_Port  GPIOB
+#define VIN_Pin GPIO_PIN_6
+#define VIN_GPIO_Port GPIOA
+#define IR_FRONT_Pin GPIO_PIN_7
+#define IR_FRONT_GPIO_Port GPIOA
+#define IR_PU_Pin GPIO_PIN_0
+#define IR_PU_GPIO_Port GPIOB
+#define IR_BACK_Pin GPIO_PIN_1
+#define IR_BACK_GPIO_Port GPIOB
+#define IR_EN_Pin GPIO_PIN_2
+#define IR_EN_GPIO_Port GPIOB
+#define QI_STBY_Pin GPIO_PIN_14
+#define QI_STBY_GPIO_Port GPIOB
+#define LED_Pin GPIO_PIN_12
+#define LED_GPIO_Port GPIOA
+#define SOLENOID_Pin GPIO_PIN_3
+#define SOLENOID_GPIO_Port GPIOB
+#define USART1_DE_Pin GPIO_PIN_5
+#define USART1_DE_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-/* Deliver power to IR sensor */
+/* IR sensor control */
 #define IR_START                                                       \
     do                                                                 \
     {                                                                  \
@@ -99,8 +101,6 @@ void Error_Handler(void);
         HAL_GPIO_WritePin(IR_EN_GPIO_Port, IR_EN_Pin, GPIO_PIN_RESET); \
     }                                                                  \
     while (0)
-
-/* Take off power from IR sensor */
 #define IR_STOP                                                        \
     do                                                                 \
     {                                                                  \
@@ -108,6 +108,10 @@ void Error_Handler(void);
         HAL_GPIO_WritePin(IR_EN_GPIO_Port, IR_EN_Pin, GPIO_PIN_SET);   \
     }                                                                  \
     while (0)
+
+/* NXQ standby control */
+#define NXQ_STBY_OFF HAL_GPIO_WritePin(QI_STBY_GPIO_Port, QI_STBY_Pin, GPIO_PIN_RESET)
+#define NXQ_STBY_ON  HAL_GPIO_WritePin(QI_STBY_GPIO_Port, QI_STBY_Pin, GPIO_PIN_SET)
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

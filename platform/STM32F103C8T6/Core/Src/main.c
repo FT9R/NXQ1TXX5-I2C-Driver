@@ -27,7 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "nxq1txh5.h"
+#include "nxq1txx5.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-nxq1txh5_t *nxq = &(nxq1txh5_t){0};
+nxq1txx5_t *nxq = &(nxq1txx5_t){0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,43 +105,61 @@ int main(void)
     HAL_TIM_Base_Start(&ADC_LS_TIM); // Trigger the low speed ADC conversion
 
 #pragma region NXQ_DRIVER_USAGE
-    NXQ1TXH5_Link(nxq, NXQ1TXH5_I2C1_Receive, NXQ1TXH5_I2C1_Transmit);
-    NXQ1TXH5_Charge(nxq, NXQ1TXH5_CHARGE_OFF);
+    NXQ_STBY_OFF; // Not implemented by driver because of poor pin functionality (used once after power up)
+    NXQ1TXX5_Link(nxq, NXQ1TXX5_I2C1_Receive, NXQ1TXX5_I2C1_Transmit); // Blocking transfer test
+    NXQ1TXX5_Charge(nxq, NXQ1TXX5_CHARGE_OFF);
     HAL_Delay(5000);
-    NXQ1TXH5_Charge(nxq, NXQ1TXH5_CHARGE_ON);
+    NXQ1TXX5_Charge(nxq, NXQ1TXX5_CHARGE_ON);
+
+    /* Wait for the device to switch to charging mode.
+     * Otherwise not all device registers are updated with valid values */
+    while (true)
+    {
+        NXQ1TXX5_SystemStatus(nxq);
+        if (nxq->operation == NXQ1TXX5_OPERATION_CHARGE)
+        {
+            /* NXQ1TXX5 enters to charge mode to check for
+             * a receiver on the transmitter base.
+             * So we should ensure that QI receiver is really
+             * placed by requesting operation again after ~1000ms. */
+            HAL_Delay(1000);
+            NXQ1TXX5_SystemStatus(nxq);
+            if (nxq->operation == NXQ1TXX5_OPERATION_CHARGE)
+                break;
+        }
+    }
+    NXQ1TXX5_Link(nxq, NXQ1TXX5_I2C1_Receive_IT, NXQ1TXX5_I2C1_Transmit_IT); // IT transfer test
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1)
     {
-        /* Wait for the device to switch to charging mode.
-         * Otherwise not all device registers are updated with legit values */
-        while (true)
+
+        static int taskStep = 0;
+        if (nxq->process == NXQ1TXX5_PROCESS_IDLE) // Wait until the current task is finished
         {
-            NXQ1TXH5_SystemStatus(nxq);
-            if (nxq->operation == NXQ1TXH5_OPERATION_CHARGE)
+            switch (taskStep)
             {
-                /* NXQ1TXH5 enters to charge mode to check for
-                 * a receiver on the transmitter base.
-                 * So we should ensure that QI receiver is really
-                 * placed by requesting operation again after ~500ms. */
-                HAL_Delay(500);
-                NXQ1TXH5_SystemStatus(nxq);
-                if (nxq->operation == NXQ1TXH5_OPERATION_CHARGE)
-                    break;
+            case 0:
+                NXQ1TXX5_Temperature(nxq);
+                break;
+            case 1:
+                NXQ1TXX5_SupplyVoltage(nxq);
+                break;
+            case 2:
+                NXQ1TXX5_NTCVoltage(nxq);
+                taskStep = -1; // All tasks complete, reset counter
+                break;
             }
+            taskStep++;
         }
-        NXQ1TXH5_SystemStatus(nxq);
-        NXQ1TXH5_Temperature(nxq);
-        NXQ1TXH5_SupplyVoltage(nxq);
-        NXQ1TXH5_NTCVoltage(nxq);
+#pragma endregion NXQ_DRIVER_USAGE
 
         HAL_GPIO_TogglePin(RGB_R_GPIO_Port, RGB_R_Pin | RGB_G_Pin | RGB_B_Pin);
-        HAL_Delay(5);
+        HAL_Delay(1);
         HAL_GPIO_TogglePin(RGB_R_GPIO_Port, RGB_R_Pin | RGB_G_Pin | RGB_B_Pin);
-        HAL_Delay(500);
-#pragma endregion NXQ_DRIVER_USAGE
+        HAL_Delay(100);
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -213,6 +231,16 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 
     HAL_ADCEx_InjectedStart_IT(&ADC_LS);
     // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin); // FIXME: look at the ADC sampling freq
+}
+
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+    NXQ1TXX5_Callback(nxq);
+}
+
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+    NXQ1TXX5_Callback(nxq);
 }
 /* USER CODE END 4 */
 

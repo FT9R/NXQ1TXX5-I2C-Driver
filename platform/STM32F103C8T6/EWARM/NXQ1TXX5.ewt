@@ -2,7 +2,7 @@
 <project>
     <fileVersion>4</fileVersion>
     <configuration>
-        <name>NXQ1TXH5</name>
+        <name>NXQ1TXX5</name>
         <toolchain>
             <name>ARM</name>
         </toolchain>
@@ -22,7 +22,7 @@
                     <enableFalsePositives>0</enableFalsePositives>
                     <messagesLimitEnabled>1</messagesLimitEnabled>
                     <messagesLimit>100</messagesLimit>
-                    <outputDir>NXQ1TXH5/C-STAT</outputDir>
+                    <outputDir>NXQ1TXX5/C-STAT</outputDir>
                 </cstatargs>
                 <cstat_settings>
                     <cstat_version>2.6.0</cstat_version>
@@ -1565,12 +1565,12 @@
         </group>
     </group>
     <group>
-        <name>nxq1txh5</name>
+        <name>nxq1txx5</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\nxq1txh5\driver\nxq1txh5.c</name>
+            <name>$PROJ_DIR$\..\..\..\nxq1txx5\driver\nxq1txx5.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\nxq1txh5\ifc\stm32\nxq1txh5_ifc.c</name>
+            <name>$PROJ_DIR$\..\..\..\nxq1txx5\ifc\stm32\nxq1txx5_ifc.c</name>
         </file>
     </group>
 </project>

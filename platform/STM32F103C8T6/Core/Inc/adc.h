@@ -54,3 +54,4 @@ float ADC_VinGet(q15_t lsb);
 #endif
 
 #endif /* __ADC_H__ */
+
