@@ -40,7 +40,7 @@ nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Transmit_IT(uint8_t regAddress, uint16_t *da
 nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Receive_DMA(uint8_t regAddress, uint16_t *data);
 nxq1txx5_ifc_status_t NXQ1TXX5_I2Cx_Transmit_DMA(uint8_t regAddress, uint16_t *data);
 ```
-* Link the functions above to a device handle:
+* Use `NXQ1TXX5_Link` function to switch between data transfer modes:
 ```C
 /* Blocking */
 NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive, NXQ1TXX5_I2Cx_Transmit);
@@ -51,7 +51,7 @@ NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive_IT, NXQ1TXX5_I2Cx_Transmit_IT);
 /* DMA */
 NXQ1TXX5_Link(&nxq, NXQ1TXX5_I2Cx_Receive_DMA, NXQ1TXX5_I2Cx_Transmit_DMA);
 ```
-* Place driver callback in the RX and TX IRQs in case of non-blocking usage
+* Place driver callback in the RX and TX IRQs in case of non-blocking usage:
 ```C
 void I2C_TxCpltCallback()
 {
